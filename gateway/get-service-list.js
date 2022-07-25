@@ -54,7 +54,7 @@ export function getHeaders() {
 }
 
 export async function GetServiceList() {
-  const { data, errors } = await axios.post(
+  const { data } = await axios.post(
     'https://graphql.api.apollographql.com/api/graphql',
     makeSubgraphQueryPayload(),
     {
@@ -62,11 +62,11 @@ export async function GetServiceList() {
     }
   );
 
-  if (errors || !data.data) {
+  if (data.errors || !data?.data?.graph?.variant?.subgraphs?.length) {
     throw new Error(
       `something went wrong when talking to studio: ${
-        errors
-          ? JSON.stringify(errors)
+        data.errors
+          ? JSON.stringify(data.errors)
           : 'No graphs were received. Please check your settings have an API key, graph name and variant and try again.'
       }`
     );

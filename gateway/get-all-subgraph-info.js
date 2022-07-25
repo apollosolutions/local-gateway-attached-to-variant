@@ -90,7 +90,7 @@ async function loadServicesFromRemoteEndpoint({
 }
 
 export async function GetSDLFromStudio() {
-  const { data, errors } = await axios.post(
+  const { data } = await axios.post(
     'https://graphql.api.apollographql.com/api/graphql',
     makeSubgraphSDLQueryPayload(),
     {
@@ -98,11 +98,11 @@ export async function GetSDLFromStudio() {
     }
   );
 
-  if (errors || !data.data) {
+  if (data.errors || !data?.data?.service?.implementingServices?.services?.length) {
     throw new Error(
       `something went wrong when talking to studio: ${
-        errors
-          ? JSON.stringify(errors)
+        data.errors
+          ? JSON.stringify(data.errors)
           : 'No graphs were received. Please check your settings have an API key, graph name and variant and try again.'
       }`
     );
