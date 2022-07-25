@@ -68,7 +68,7 @@ async function loadServicesFromRemoteEndpoint({
           return {
             name,
             url,
-            sld: data._service.sdl,
+            sdl: data._service.sdl,
           };
         }
 
@@ -90,7 +90,7 @@ async function loadServicesFromRemoteEndpoint({
 }
 
 export async function GetSDLFromStudio() {
-  const { data, errors } = await axios.post(
+  const { data } = await axios.post(
     'https://graphql.api.apollographql.com/api/graphql',
     makeSubgraphSDLQueryPayload(),
     {
@@ -98,11 +98,11 @@ export async function GetSDLFromStudio() {
     }
   );
 
-  if (errors || !data.data) {
+  if (data.errors || !data?.data?.service?.implementingServices?.services?.length) {
     throw new Error(
       `something went wrong when talking to studio: ${
-        errors
-          ? JSON.stringify(errors)
+        data.errors
+          ? JSON.stringify(data.errors)
           : 'No graphs were received. Please check your settings have an API key, graph name and variant and try again.'
       }`
     );
@@ -118,21 +118,19 @@ export async function GetSDLFromStudio() {
 
   const subgraphs = {
     useFromStudio: [],
-    local: [],
+    local: config.replacedServices,
   };
 
-  services.map((service) => {
+  services.forEach((service) => {
     const indexOfReplacement = config.replacedServices
       .map((s) => s.name)
       .indexOf(service.name);
 
-    if (indexOfReplacement > -1) {
-      subgraphs.local.push(config.replacedServices[indexOfReplacement]);
-    } else {
+    if (indexOfReplacement === -1) {
       subgraphs.useFromStudio.push({
         name: service.name,
         url: service.url,
-        sld: service.activePartialSchema.sdl,
+        sdl: service.activePartialSchema.sdl,
       });
     }
   });

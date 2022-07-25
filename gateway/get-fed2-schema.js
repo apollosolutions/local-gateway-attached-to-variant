@@ -13,7 +13,7 @@ async function composeWithResolvedConfig(graphs) {
       const subgraph = buildSubgraph(
         graph.name,
         graph.url ?? 'http://localhost:4001',
-        graph.sld
+        graph.sdl
       );
       subgraphs.add(subgraph);
     } catch (e) {

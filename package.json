@@ -15,22 +15,22 @@
     "server:gateway": "wait-on tcp:4001 tcp:4002 && nodemon ./gateway/index.js"
   },
   "dependencies": {
-    "@apollo/composition": "2.0.5",
+    "@apollo/composition": "^2.0.5",
     "@apollo/federation-1": "npm:@apollo/federation@0.36.1",
-    "@apollo/federation-internals": "2.0.5",
-    "@apollo/gateway": "2.0.5",
+    "@apollo/federation-internals": "^2.0.5",
+    "@apollo/gateway": "^2.0.5",
     "@apollo/query-planner-1": "npm:@apollo/query-planner@0.10.2",
-    "@apollo/subgraph": "2.0.5",
-    "apollo-server": "3.10.0",
-    "axios": "0.27.2",
-    "graphql": "16.5.0",
-    "js-yaml": "4.1.0",
-    "path": "0.12.7"
+    "@apollo/subgraph": "^2.0.5",
+    "apollo-server": "^3.10.0",
+    "axios": "^0.27.2",
+    "graphql": "^16.5.0",
+    "js-yaml": "^4.1.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
-    "concurrently": "5.3.0",
+    "concurrently": "^7.2.2",
     "dotenv": "^16.0.1",
-    "nodemon": "2.0.19",
-    "wait-on": "5.3.0"
+    "nodemon": "^2.0.19",
+    "wait-on": "^6.0.1"
   }
 }
