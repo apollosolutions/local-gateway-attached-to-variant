@@ -68,7 +68,7 @@ async function loadServicesFromRemoteEndpoint({
           return {
             name,
             url,
-            sld: data._service.sdl,
+            sdl: data._service.sdl,
           };
         }
 
@@ -118,21 +118,19 @@ export async function GetSDLFromStudio() {
 
   const subgraphs = {
     useFromStudio: [],
-    local: [],
+    local: config.replacedServices,
   };
 
-  services.map((service) => {
+  services.forEach((service) => {
     const indexOfReplacement = config.replacedServices
       .map((s) => s.name)
       .indexOf(service.name);
 
-    if (indexOfReplacement > -1) {
-      subgraphs.local.push(config.replacedServices[indexOfReplacement]);
-    } else {
+    if (indexOfReplacement === -1) {
       subgraphs.useFromStudio.push({
         name: service.name,
         url: service.url,
-        sld: service.activePartialSchema.sdl,
+        sdl: service.activePartialSchema.sdl,
       });
     }
   });

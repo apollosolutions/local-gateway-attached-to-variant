@@ -3,10 +3,10 @@ import { buildComposedSchema } from '@apollo/query-planner-1';
 import { parse } from 'graphql';
 
 export async function composeWithResolvedConfig(subgraphs) {
-  const serviceList = subgraphs.map(({ name, url, sld }) => ({
+  const serviceList = subgraphs.map(({ name, url, sdl }) => ({
     name,
     url: url ?? undefined,
-    typeDefs: parse(sld),
+    typeDefs: parse(sdl),
   }));
 
   const result = composeAndValidate(serviceList);
